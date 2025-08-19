@@ -22,23 +22,7 @@ const Header = ({ onMobileMenuToggle, onQuickAdd }) => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <Button
-            onClick={onQuickAdd}
-            size="sm"
-            className="hidden sm:flex items-center space-x-2"
-          >
-            <ApperIcon name="Plus" size={16} />
-            <span>Quick Add</span>
-          </Button>
-          
-          <button
-            onClick={onQuickAdd}
-            className="sm:hidden p-2 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-colors"
-          >
-            <ApperIcon name="Plus" size={16} />
-          </button>
-
+<div className="flex items-center space-x-4">
           <button
             onClick={logout}
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-600 hover:text-red-600"
