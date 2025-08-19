@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import ApperIcon from "@/components/ApperIcon";
 import Badge from "@/components/atoms/Badge";
-
-const CourseCard = ({ course, onEdit, onDelete, className = "" }) => {
+import Button from "@/components/atoms/Button";
+const CourseCard = ({ course, onEdit, onDelete, onShowAttachments, attachments = [], className = "" }) => {
   const getGradeColor = (grade) => {
     if (grade >= 90) return "text-emerald-600";
     if (grade >= 80) return "text-blue-600";
@@ -56,6 +56,21 @@ const CourseCard = ({ course, onEdit, onDelete, className = "" }) => {
         <div className="flex items-center text-gray-600">
           <ApperIcon name="Clock" size={16} className="mr-2 text-gray-400" />
           <span className="text-sm">{formatSchedule(course.schedule)}</span>
+        </div>
+{/* Attachments Section */}
+        <div className="px-6 py-3 bg-gray-50 border-t border-gray-100">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onShowAttachments?.(course)}
+            className={`w-full justify-center text-xs ${attachments.length > 0 ? 'text-primary-600 bg-primary-50' : 'text-gray-500'} hover:text-primary-700 hover:bg-primary-100`}
+          >
+            <ApperIcon name="Paperclip" size={14} className="mr-2" />
+            {attachments.length > 0 
+              ? `${attachments.length} Attachment${attachments.length > 1 ? 's' : ''}` 
+              : 'Add Attachments'
+            }
+          </Button>
         </div>
       </div>
 

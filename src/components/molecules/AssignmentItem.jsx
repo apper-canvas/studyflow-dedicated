@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { format, isToday, isTomorrow, isPast } from "date-fns";
 import ApperIcon from "@/components/ApperIcon";
 import Badge from "@/components/atoms/Badge";
-
-const AssignmentItem = ({ assignment, course, onEdit, onDelete, onToggleStatus }) => {
+import Button from "@/components/atoms/Button";
+const AssignmentItem = ({ assignment, course, onEdit, onDelete, onToggleStatus, onShowAttachments, attachments = [] }) => {
   const formatDueDate = (date) => {
     const dueDate = new Date(date);
     if (isToday(dueDate)) return "Today";
@@ -96,6 +96,16 @@ const AssignmentItem = ({ assignment, course, onEdit, onDelete, onToggleStatus }
                   {assignment.grade}%
                 </Badge>
               )}
+{/* Attachments Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onShowAttachments?.(assignment)}
+                className={`text-xs ${attachments.length > 0 ? 'text-primary-600 bg-primary-50' : 'text-gray-500'} hover:text-primary-700 hover:bg-primary-100`}
+              >
+                <ApperIcon name="Paperclip" size={14} className="mr-1" />
+                {attachments.length > 0 ? attachments.length : 'Attach'}
+              </Button>
             </div>
           </div>
         </div>

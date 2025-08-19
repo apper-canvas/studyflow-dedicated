@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { coursesService } from "@/services/api/coursesService";
+import { attachmentService } from "@/services/api/attachmentService";
 import CourseGrid from "@/components/organisms/CourseGrid";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
+import FileAttachment from "@/components/molecules/FileAttachment";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -49,7 +51,24 @@ const Courses = () => {
       }
     }
   };
+const [showAttachments, setShowAttachments] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [attachments, setAttachments] = useState({});
 
+  const handleShowAttachments = async (course) => {
+    setSelectedCourse(course);
+    try {
+      const courseAttachments = await attachmentService.getByEntity('course', course.Id);
+      setAttachments(prev => ({ ...prev, [course.Id]: courseAttachments }));
+      setShowAttachments(true);
+    } catch (error) {
+      toast.error("Failed to load attachments");
+    }
+  };
+
+  const handleAttachmentChange = (courseId, newAttachments) => {
+    setAttachments(prev => ({ ...prev, [courseId]: newAttachments }));
+  };
   if (loading) {
     return <Loading variant="card" />;
   }
@@ -75,12 +94,52 @@ const Courses = () => {
         </Button>
       </div>
 
-      <CourseGrid
+<CourseGrid
         courses={courses}
         onEdit={handleEditCourse}
         onDelete={handleDeleteCourse}
         onAdd={handleAddCourse}
+        onShowAttachments={handleShowAttachments}
+        attachments={attachments}
       />
+
+      {/* Attachment Modal */}
+      {showAttachments && selectedCourse && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
+          >
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Attachments - {selectedCourse.name}
+                </h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowAttachments(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <ApperIcon name="X" size={20} />
+                </Button>
+              </div>
+            </div>
+            <div className="p-6 overflow-y-auto max-h-[60vh]">
+              <FileAttachment
+                entityType="course"
+                entityId={selectedCourse.Id}
+                attachments={attachments[selectedCourse.Id] || []}
+                onAttachmentChange={(newAttachments) => 
+                  handleAttachmentChange(selectedCourse.Id, newAttachments)
+                }
+              />
+            </div>
+          </motion.div>
+        </div>
+      )}
     </motion.div>
   );
 };

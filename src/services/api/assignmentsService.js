@@ -1,4 +1,5 @@
 import assignmentsData from "@/services/mockData/assignments.json";
+import { attachmentService } from "./attachmentService";
 
 let assignments = [...assignmentsData];
 
@@ -24,7 +25,7 @@ export const assignmentsService = {
     return assignments.filter(a => a.courseId === parseInt(courseId)).map(a => ({ ...a }));
   },
 
-  async create(assignmentData) {
+async create(assignmentData) {
     await delay(400);
     const maxId = Math.max(...assignments.map(a => a.Id), 0);
     const newAssignment = {
@@ -37,7 +38,27 @@ export const assignmentsService = {
     return { ...newAssignment };
   },
 
-  async update(id, assignmentData) {
+  // Get attachments for assignment
+  async getAttachments(assignmentId) {
+    return await attachmentService.getByEntity('assignment', assignmentId);
+  },
+
+  // Add attachment to assignment
+  async addAttachment(assignmentId, attachmentData) {
+    const attachmentWithEntity = {
+      ...attachmentData,
+      entityType: 'assignment',
+      entityId: parseInt(assignmentId)
+    };
+    return await attachmentService.create(attachmentWithEntity);
+  },
+
+  // Remove attachment from assignment
+  async removeAttachment(attachmentId) {
+    return await attachmentService.delete(attachmentId);
+  },
+
+async update(id, assignmentData) {
     await delay(300);
     const index = assignments.findIndex(a => a.Id === parseInt(id));
     if (index === -1) {

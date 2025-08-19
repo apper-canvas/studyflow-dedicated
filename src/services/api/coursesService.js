@@ -1,4 +1,7 @@
 import coursesData from "@/services/mockData/courses.json";
+import { attachmentService } from "./attachmentService";
+import React from "react";
+import Error from "@/components/ui/Error";
 
 let courses = [...coursesData];
 
@@ -19,7 +22,7 @@ export const coursesService = {
     return { ...course };
   },
 
-  async create(courseData) {
+async create(courseData) {
     await delay(400);
     const maxId = Math.max(...courses.map(c => c.Id), 0);
     const newCourse = {
@@ -29,6 +32,26 @@ export const coursesService = {
     };
     courses.push(newCourse);
     return { ...newCourse };
+  },
+
+  // Get attachments for course
+  async getAttachments(courseId) {
+    return await attachmentService.getByEntity('course', courseId);
+  },
+
+  // Add attachment to course
+  async addAttachment(courseId, attachmentData) {
+    const attachmentWithEntity = {
+      ...attachmentData,
+      entityType: 'course',
+      entityId: parseInt(courseId)
+    };
+    return await attachmentService.create(attachmentWithEntity);
+  },
+
+// Remove attachment from course
+  async removeAttachment(attachmentId) {
+    return await attachmentService.delete(attachmentId);
   },
 
   async update(id, courseData) {
