@@ -12,7 +12,7 @@ import FileAttachment from "@/components/molecules/FileAttachment";
 
 const Courses = () => {
 const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [newCourse, setNewCourse] = useState({
@@ -43,7 +43,9 @@ const [courses, setCourses] = useState([]);
   }, []);
 
 const handleAddCourse = () => {
+    console.log('Add Course button clicked'); // Debug log
     setShowAddModal(true);
+    console.log('Modal should be showing now'); // Debug log
   };
 
   const handleSaveCourse = async () => {
@@ -176,12 +178,15 @@ const [showAttachments, setShowAttachments] = useState(false);
       />
 
       {/* Add Course Modal */}
-      {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+{showAddModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[9999] p-4">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto"
+            initial={{ opacity: 0, scale: 0.9, y: -20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="bg-white rounded-lg shadow-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto relative"
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Add New Course</h3>
