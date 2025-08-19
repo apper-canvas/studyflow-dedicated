@@ -1,0 +1,75 @@
+[
+  {
+    "Id": 1,
+    "name": "Advanced Calculus",
+    "professor": "Dr. Sarah Chen",
+    "room": "MATH 201",
+    "schedule": [
+      {"day": "Monday", "time": "10:00 AM"},
+      {"day": "Wednesday", "time": "10:00 AM"},
+      {"day": "Friday", "time": "10:00 AM"}
+    ],
+    "color": "#4F46E5",
+    "credits": 4,
+    "semester": "Fall 2024",
+    "grade": 92.5
+  },
+  {
+    "Id": 2,
+    "name": "Modern Physics",
+    "professor": "Prof. Michael Rodriguez",
+    "room": "PHYS 105",
+    "schedule": [
+      {"day": "Tuesday", "time": "2:00 PM"},
+      {"day": "Thursday", "time": "2:00 PM"}
+    ],
+    "color": "#7C3AED",
+    "credits": 3,
+    "semester": "Fall 2024",
+    "grade": 88.2
+  },
+  {
+    "Id": 3,
+    "name": "Computer Science Fundamentals",
+    "professor": "Dr. Emily Johnson",
+    "room": "CS 301",
+    "schedule": [
+      {"day": "Monday", "time": "1:00 PM"},
+      {"day": "Wednesday", "time": "1:00 PM"},
+      {"day": "Friday", "time": "1:00 PM"}
+    ],
+    "color": "#EC4899",
+    "credits": 4,
+    "semester": "Fall 2024",
+    "grade": 95.8
+  },
+  {
+    "Id": 4,
+    "name": "Literature Analysis",
+    "professor": "Prof. David Martinez",
+    "room": "ENG 204",
+    "schedule": [
+      {"day": "Tuesday", "time": "11:00 AM"},
+      {"day": "Thursday", "time": "11:00 AM"}
+    ],
+    "color": "#10B981",
+    "credits": 3,
+    "semester": "Fall 2024",
+    "grade": 90.1
+  },
+  {
+    "Id": 5,
+    "name": "Organic Chemistry",
+    "professor": "Dr. Lisa Wang",
+    "room": "CHEM 102",
+    "schedule": [
+      {"day": "Monday", "time": "9:00 AM"},
+      {"day": "Wednesday", "time": "9:00 AM"},
+      {"day": "Friday", "time": "9:00 AM"}
+    ],
+    "color": "#F59E0B",
+    "credits": 4,
+    "semester": "Fall 2024",
+    "grade": 87.6
+  }
+]
